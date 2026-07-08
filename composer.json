@@ -1,0 +1,28 @@
+{
+    "name":  "elavora/api-database-sqlite",
+    "description":  "Extensao SQLite opcional para o framework Elavora",
+    "type":  "library",
+    "license":  "MIT",
+    "require":  {
+                    "php":  "\u003e=8.1",
+                    "ext-pdo_sqlite":  "*",
+                    "elavora/api-database-pdo":  "^0.1",
+                    "elavora/api-framework":  "^0.3.1"
+                },
+    "autoload":  {
+                     "psr-4":  {
+                                   "Elavora\\Api\\Extension\\DatabaseSqlite\\":  "src/"
+                               }
+                 },
+    "require-dev":  {
+                        "phpunit/phpunit":  "^10.5 || ^11.0 || ^12.0"
+                    },
+    "scripts":  {
+                    "test":  "phpunit -c phpunit.xml"
+                },
+    "extra":  {
+                  "branch-alias":  {
+                                       "dev-main":  "0.1-dev"
+                                   }
+              }
+}
