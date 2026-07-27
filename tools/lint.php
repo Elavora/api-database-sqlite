@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-$root = dirname(__DIR__);
+$projectRoot = dirname(__DIR__);
 $files = [];
 
 foreach (['src', 'tests'] as $directory) {
-    $path = $root . DIRECTORY_SEPARATOR . $directory;
+    $path = $projectRoot . DIRECTORY_SEPARATOR . $directory;
     if (!is_dir($path)) {
         continue;
     }
@@ -26,23 +26,37 @@ sort($files);
 $invalidFiles = [];
 
 foreach ($files as $file) {
-    $output = [];
-    $status = 0;
-    $command = escapeshellarg(PHP_BINARY) . ' -l ' . escapeshellarg($file);
-    exec($command, $output, $status);
+    $process = proc_open(
+        [PHP_BINARY, '-l', $file],
+        [
+            1 => ['pipe', 'w'],
+            2 => ['pipe', 'w'],
+        ],
+        $pipes
+    );
 
-    if ($status !== 0) {
-        $invalidFiles[] = $file;
-        fwrite(STDERR, implode(PHP_EOL, $output) . PHP_EOL);
+    if (!is_resource($process)) {
+        $invalidFiles[$file] = 'Nao foi possivel iniciar o PHP lint.';
+        continue;
+    }
+
+    $output = stream_get_contents($pipes[1]);
+    $errorOutput = stream_get_contents($pipes[2]);
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+
+    if (proc_close($process) !== 0) {
+        $invalidFiles[$file] = trim($output . PHP_EOL . $errorOutput);
     }
 }
 
-if ($invalidFiles !== []) {
-    fwrite(
-        STDERR,
-        sprintf("Lint falhou em %d arquivo(s).%s", count($invalidFiles), PHP_EOL)
-    );
-    exit(1);
+if ($invalidFiles === []) {
+    echo sprintf("Lint aprovado em %d arquivo(s).%s", count($files), PHP_EOL);
+    exit(0);
 }
 
-fwrite(STDOUT, sprintf("Lint concluido: %d arquivo(s).%s", count($files), PHP_EOL));
+foreach ($invalidFiles as $file => $error) {
+    fwrite(STDERR, sprintf("%s:%s%s%s", $file, PHP_EOL, $error, PHP_EOL));
+}
+
+exit(1);
