@@ -10,7 +10,9 @@ use Elavora\Api\Framework\Application;
 use Elavora\Api\Framework\Container;
 use Elavora\Api\Framework\Contracts\DatabaseConnectionFactory;
 use Elavora\Api\Framework\Contracts\Extension;
+use Elavora\Api\Framework\Contracts\TransactionManager;
 use InvalidArgumentException;
+use LogicException;
 
 final class SqliteExtension implements Extension
 {
@@ -35,16 +37,26 @@ final class SqliteExtension implements Extension
 
         $application->container()->bind(
             PdoDatabase::class,
-            static fn (Container $container): PdoDatabase => new PdoDatabase(
-                connection: $container->get(DatabaseConnectionFactory::class)->connection()
-            )
+            static fn (Container $container): PdoDatabase => self::database($container)
+        );
+
+        $application->container()->bind(
+            TransactionManager::class,
+            static fn (Container $container): TransactionManager => self::transactionManager($container)
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function pdoConfig(): array
     {
         if (!isset($this->config['connections'])) {
             return $this->withDsn($this->config);
+        }
+
+        if (!is_array($this->config['connections'])) {
+            throw new InvalidArgumentException('A chave connections do SQLite deve ser um array.');
         }
 
         $connections = [];
@@ -59,6 +71,10 @@ final class SqliteExtension implements Extension
         return ['connections' => $connections];
     }
 
+    /**
+     * @param array<string, mixed> $config
+     * @return array<string, mixed>
+     */
     private function withDsn(array $config): array
     {
         if (($config['memory'] ?? false) === true) {
@@ -75,5 +91,27 @@ final class SqliteExtension implements Extension
         $config['dsn'] = "sqlite:$path";
 
         return $config;
+    }
+
+    private static function database(Container $container): PdoDatabase
+    {
+        $factory = $container->get(DatabaseConnectionFactory::class);
+
+        if (!$factory instanceof DatabaseConnectionFactory) {
+            throw new LogicException('O servico SQLite deve resolver para DatabaseConnectionFactory.');
+        }
+
+        return new PdoDatabase(connection: $factory->connection());
+    }
+
+    private static function transactionManager(Container $container): TransactionManager
+    {
+        $database = $container->get(PdoDatabase::class);
+
+        if (!$database instanceof PdoDatabase) {
+            throw new LogicException('O servico SQLite deve resolver para PdoDatabase.');
+        }
+
+        return $database;
     }
 }
