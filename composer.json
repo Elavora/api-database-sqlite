@@ -15,10 +15,24 @@
     }
   },
   "require-dev": {
+    "elavora/code-standards": "^1.1",
+    "phpstan/phpstan": "^2.2",
     "phpunit/phpunit": "^10.5 || ^11.0 || ^12.0"
   },
   "scripts": {
-    "test": "phpunit -c phpunit.xml"
+    "lint": "elavora-standards lint",
+    "test": "phpunit -c phpunit.xml",
+    "analyse": "phpstan analyse --no-progress --memory-limit=512M",
+    "check": [
+      "@lint",
+      "@test",
+      "@analyse"
+    ],
+    "post-install-cmd": ["Elavora\\CodeStandards\\Composer::sync"],
+    "post-update-cmd": ["Elavora\\CodeStandards\\Composer::sync"]
+  },
+  "config": {
+    "sort-packages": true
   },
   "extra": {
     "branch-alias": {
