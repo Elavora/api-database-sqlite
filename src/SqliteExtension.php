@@ -17,9 +17,7 @@ final class SqliteExtension implements Extension
     /**
      * @param array<string, mixed> $config Configuracao SQLite unica ou mapa de conexoes.
      */
-    public function __construct(private readonly array $config)
-    {
-    }
+    public function __construct(private readonly array $config) {}
 
     /**
      * Registra a factory PDO configurada para SQLite.
@@ -30,17 +28,23 @@ final class SqliteExtension implements Extension
 
         $application->container()->bind(
             DatabaseConnectionFactory::class,
-            $factory
+            $factory,
         );
 
         $application->container()->bind(
             PdoDatabase::class,
-            static fn (Container $container): PdoDatabase => new PdoDatabase(
-                connection: $container->get(DatabaseConnectionFactory::class)->connection()
-            )
+            static function (Container $container): PdoDatabase {
+                /** @var DatabaseConnectionFactory $connections */
+                $connections = $container->get(DatabaseConnectionFactory::class);
+
+                return new PdoDatabase(connection: $connections->connection());
+            },
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function pdoConfig(): array
     {
         if (!isset($this->config['connections'])) {
@@ -59,6 +63,11 @@ final class SqliteExtension implements Extension
         return ['connections' => $connections];
     }
 
+    /**
+     * @param array<string, mixed> $config
+     *
+     * @return array<string, mixed>
+     */
     private function withDsn(array $config): array
     {
         if (($config['memory'] ?? false) === true) {
