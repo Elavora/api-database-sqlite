@@ -259,12 +259,12 @@ final class SqliteExtensionConfigTest extends TestCase
         $database->begin();
         $database->insert('t', ['name' => 'a']);
         $database->rollback();
-        self::assertFalse($database->exists('SELECT 1 FROM t'));
+        self::assertFalse($database->exists('t'));
 
         $database->begin();
         $database->insert('t', ['name' => 'b']);
         $database->commit();
-        self::assertTrue($database->exists('SELECT 1 FROM t'));
+        self::assertTrue($database->exists('t'));
     }
 
     public function testDoesNotRegisterTransactionManager(): void
