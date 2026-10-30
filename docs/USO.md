@@ -1,6 +1,6 @@
 # Guia de uso
 
-[README](../README.md)
+[README](../README.md) · Veja também: [Desenvolvimento e testes](DESENVOLVIMENTO.md) · [Automação do repositório](AUTOMACAO.md)
 
 Extensão SQLite para o framework Elavora, baseada em `elavora/api-database-pdo`.
 
@@ -172,12 +172,8 @@ O valor `':memory:'` em `path` produz o DSN `sqlite::memory:`, o mesmo efeito de
 
 ## Desenvolvimento e testes
 
-Os testes usam SQLite em memória, então não precisam de banco externo. Rode no container da organização, pelo
-PowerShell, montando o repositório em `/origem`:
-
-```powershell
-docker run --rm -v "${PWD}:/origem:ro" ghcr.io/elavora/php-dev:8.3-latest sh -c "cp -r /origem /tmp/w && cd /tmp/w && composer install --no-interaction && composer validate --strict --no-check-publish && vendor/bin/phpunit"
-```
+Os testes usam SQLite em memória, então não precisam de banco externo. O passo a passo, os scripts do Composer e o que
+roda no CI estão em [Desenvolvimento e testes](DESENVOLVIMENTO.md).
 
 ## Observações
 
