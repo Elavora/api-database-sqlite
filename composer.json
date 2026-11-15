@@ -6,7 +6,7 @@
   "require": {
     "php": ">=8.3",
     "ext-pdo_sqlite": "*",
-    "elavora/api-database-pdo": "^1.0",
+    "elavora/api-database-pdo": "^2.0",
     "elavora/api-framework": "^3.0"
   },
   "autoload": {

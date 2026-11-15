@@ -24,7 +24,7 @@ final class ComposerJsonTest extends TestCase
             [
                 'php' => '>=8.3',
                 'ext-pdo_sqlite' => '*',
-                'elavora/api-database-pdo' => '^1.0',
+                'elavora/api-database-pdo' => '^2.0',
                 'elavora/api-framework' => '^3.0',
             ],
             self::composer()['require'] ?? null,
