@@ -25,7 +25,7 @@ final class ComposerJsonTest extends TestCase
                 'php' => '>=8.3',
                 'ext-pdo_sqlite' => '*',
                 'elavora/api-database-pdo' => '^1.0',
-                'elavora/api-framework' => '^2.0',
+                'elavora/api-framework' => '^3.0',
             ],
             self::composer()['require'] ?? null,
         );
@@ -33,6 +33,6 @@ final class ComposerJsonTest extends TestCase
 
     public function testMainBranchAliasIsOnePointZeroDev(): void
     {
-        self::assertSame('1.0-dev', self::composer()['extra']['branch-alias']['dev-main'] ?? null);
+        self::assertSame('2.0-dev', self::composer()['extra']['branch-alias']['dev-main'] ?? null);
     }
 }
