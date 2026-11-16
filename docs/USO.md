@@ -16,14 +16,14 @@ Este pacote só traduz a configuração SQLite (`path` ou `memory`) para o DSN d
 | Restrição que os dependentes devem usar | `"elavora/api-database-sqlite": "^1.0"` |
 | `elavora/api-framework` exigido | `^2.0` |
 | `elavora/api-database-pdo` exigido | `^1.0` |
-| PHP exigido | `>=8.3` (o mesmo mínimo do framework 2.0) |
+| PHP exigido | `>=8.4` (o mesmo mínimo do framework 2.0) |
 | Extensão exigida | `ext-pdo_sqlite` `*` |
 
 O `composer.json` do pacote declara exatamente:
 
 ```json
 "require": {
-    "php": ">=8.3",
+    "php": ">=8.4",
     "ext-pdo_sqlite": "*",
     "elavora/api-database-pdo": "^1.0",
     "elavora/api-framework": "^2.0"
@@ -51,7 +51,7 @@ pdo; o código que registra a `SqliteExtension` continua igual. Os contratos usa
 composer require elavora/api-database-sqlite:^1.0
 ```
 
-Requisitos: PHP 8.3 ou superior, `ext-pdo_sqlite`, `elavora/api-framework` `^2.0` e `elavora/api-database-pdo` `^1.0`.
+Requisitos: PHP 8.4 ou superior, `ext-pdo_sqlite`, `elavora/api-framework` `^3.0` e `elavora/api-database-pdo` `^1.0`.
 
 ## API pública
 
