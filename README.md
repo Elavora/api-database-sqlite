@@ -9,7 +9,7 @@
 Extensão SQLite para o framework Elavora, baseada em `elavora/api-database-pdo`.
 
 - Versão: **1.0.0**. Dependentes devem exigir `"elavora/api-database-sqlite": "^1.0"`.
-- Exige `elavora/api-framework` `^3.0`, `elavora/api-database-pdo` `^2.0`, PHP `>=8.3` e `ext-pdo_sqlite`.
+- Exige `elavora/api-framework` `^4.1`, `elavora/api-database-pdo` `^3.0`, PHP `>=8.4` e `ext-pdo_sqlite`.
 
 Registre `SqliteExtension` com `path` para arquivo local ou `memory` como `true` para banco em memória.
 A chave `connections` habilita conexões nomeadas.
@@ -26,15 +26,15 @@ A especificação completa, com regras e exemplos, está em [docs/USO.md](docs/U
 composer require elavora/api-database-sqlite
 ```
 
-Requisitos: PHP 8.3 ou superior, `ext-pdo_sqlite`, `elavora/api-framework` `^3.0` e `elavora/api-database-pdo` `^2.0`.
+Requisitos: PHP 8.4 ou superior, `ext-pdo_sqlite`, `elavora/api-framework` `^4.1` e `elavora/api-database-pdo` `^3.0`.
 
 ## Desenvolvimento e testes
 
-Você só precisa de Docker. O ambiente é a imagem `ghcr.io/elavora/php-dev:8.3-latest`: abra o repositório no VS Code
+Você só precisa de Docker. O ambiente é a imagem `ghcr.io/elavora/php-dev:8.4-latest`: abra o repositório no VS Code
 com **Dev Containers: Reopen in Container**, ou rode no PowerShell:
 
 ```powershell
-docker run --rm --mount "type=bind,source=$($PWD.Path),target=/workspace" -w /workspace ghcr.io/elavora/php-dev:8.3-latest sh -lc 'git config --global --add safe.directory /workspace && composer install --no-interaction --prefer-dist && composer check'
+docker run --rm --mount "type=bind,source=$($PWD.Path),target=/workspace" -w /workspace ghcr.io/elavora/php-dev:8.4-latest sh -lc 'git config --global --add safe.directory /workspace && composer install --no-interaction --prefer-dist && composer check'
 ```
 
 Scripts do Composer:
@@ -69,7 +69,7 @@ GitHub Release são geradas em português a partir dos PRs. Veja [Versões e rel
 
 ## Atualizando da 0.x
 
-A 1.0.0 só muda os requisitos (PHP 8.3, framework 2 e pdo 1); a API do pacote é a mesma da `v0.2.0`. Veja
+A 1.0.0 só muda os requisitos (PHP 8.4, framework 2 e pdo 1); a API do pacote é a mesma da `v0.2.0`. Veja
 [O que muda para quem usa](docs/USO.md#o-que-muda-para-quem-usa).
 
 ## Documentação

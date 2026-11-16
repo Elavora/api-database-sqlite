@@ -78,8 +78,8 @@ Estas ações acontecem no GitHub e não têm teste:
 
 Nesta seção:
 
-- **imagem** é `ghcr.io/elavora/php-dev:8.3-latest`, a tag que aponta sempre para a versão estável mais recente da
-  imagem PHP 8.3 (só muda quando sai uma release estável do `Elavora/devcontainers`);
+- **imagem** é `ghcr.io/elavora/php-dev:8.4-latest`, a tag que aponta sempre para a versão estável mais recente da
+  imagem PHP 8.4 (só muda quando sai uma release estável do `Elavora/devcontainers`);
 - os SHAs e as versões dos exemplos são os da adoção. O Dependabot troca esses valores, e os testes aceitam a troca
   (ver [Atualizações do Dependabot não quebram os testes](#atualizações-do-dependabot-não-quebram-os-testes)).
 
@@ -361,7 +361,7 @@ updates:
 
 - `composer` atualiza `phpstan/phpstan`, `phpunit/phpunit` e `elavora/code-standards`. `github-actions` atualiza as
   actions de terceiros e os workflows do `Elavora/.github` (o SHA e o comentário de versão).
-- Só existem essas duas entradas. Não há entrada para imagem: o devcontainer usa a `8.3-latest`, e o CI usa o padrão
+- Só existem essas duas entradas. Não há entrada para imagem: o devcontainer usa a `8.4-latest`, e o CI usa o padrão
   do pipeline central, que muda junto com o SHA do `.github`.
 - `labels: ["dependencies"]` evita que o Dependabot crie as labels `php` e `github_actions`, que a sincronização
   apagaria toda semana. `dependencies` está no catálogo e vale patch.
@@ -377,8 +377,8 @@ Conteúdo exato:
 
 ```json
 {
-  "name": "Elavora PHP 8.3",
-  "image": "ghcr.io/elavora/php-dev:8.3-latest",
+  "name": "Elavora PHP 8.4",
+  "image": "ghcr.io/elavora/php-dev:8.4-latest",
   "remoteUser": "vscode",
   "postCreateCommand": "git config --global --add safe.directory \"$(pwd)\" && composer install --no-interaction --prefer-dist",
   "customizations": {
@@ -405,22 +405,22 @@ Conteúdo exato:
 }
 ```
 
-- `image` é exatamente `ghcr.io/elavora/php-dev:8.3-latest`: nunca uma versão fixa (`8.3-X.Y.Z`), outra tag móvel
-  (`8.3`, `latest`) nem o nome local `elavora/php-dev:8.3`.
+- `image` é exatamente `ghcr.io/elavora/php-dev:8.4-latest`: nunca uma versão fixa (`8.4-X.Y.Z`), outra tag móvel
+  (`8.4`, `latest`) nem o nome local `elavora/php-dev:8.4`.
 - O arquivo é JSON válido, sem comentários. O código PHP é formatado ao salvar.
 
 ### `composer.json`
 
 O arquivo é formatado com **2 espaços** de indentação (regra do `.editorconfig` para `*.json`), sem espaços duplos
-depois de `:` e sem sequências `\uXXXX` (por exemplo, `">=8.3"`, e não `"\u003e=8.3"`, que é como o Composer grava
-por padrão). A restrição `php` passa a `>=8.3`, a de `elavora/api-framework` a `^2.0` e a de `elavora/api-database-pdo`
+depois de `:` e sem sequências `\uXXXX` (por exemplo, `">=8.4"`, e não `"\u003e=8.4"`, que é como o Composer grava
+por padrão). A restrição `php` passa a `>=8.4`, a de `elavora/api-framework` a `^3.0` e a de `elavora/api-database-pdo`
 a `^1.0`, como no upgrade ([o que muda](USO.md#o-que-muda-para-quem-usa)). Depois do PR, ele tem:
 
 ```json
 {
   "name": "elavora/<repo>",
   "require": {
-    "php": ">=8.3",
+    "php": ">=8.4",
     "ext-pdo_sqlite": "*",
     "elavora/api-database-pdo": "^1.0",
     "elavora/api-framework": "^2.0"
@@ -844,7 +844,7 @@ As regras completas estão no `Elavora/.github`: [versionamento](https://github.
 - Só o último PR de uma série de mudanças leva `release`.
 
 **Neste repositório:** a última tag é a legada `v0.2.0`, que conta como a estável `0.2.0`. O PR único de adoção do pipeline
-traz também o upgrade (PHP `>=8.3`, `elavora/api-framework` `^2.0` e `elavora/api-database-pdo` `^1.0`, uma quebra de
+traz também o upgrade (PHP `>=8.4`, `elavora/api-framework` `^3.0` e `elavora/api-database-pdo` `^1.0`, uma quebra de
 compatibilidade) e leva as labels `upgrade` e `release`. Pela tabela acima, `upgrade` é major e `release` publica a
 estável, então o merge gera a **`1.0.0`** (`0.2.0` mais um major). Quem calcula a versão e cria a tag é o fluxo
 central: ninguém cria tag à mão. O `release.yml` novo roda no merge desse mesmo PR, e o `tag_on_merge.yml` antigo já não
@@ -863,7 +863,7 @@ como texto ou JSON. Os arquivos `.cjs` não são PHP: o PHPUnit e o `composer li
 | --- | --- |
 | `workflows.test.cjs` | os seis workflows contra os blocos desta página, o formato das referências e as regras gerais |
 | `dependabot.test.cjs` | o `dependabot.yml` exato, as labels, o prefixo dos commits e o grupo do CodeQL |
-| `devcontainer.test.cjs` | o `devcontainer.json` exato e a imagem `8.3-latest` |
+| `devcontainer.test.cjs` | o `devcontainer.json` exato e a imagem `8.4-latest` |
 | `estilo.test.cjs` | o `composer.json` (pacote em `require-dev`, restrição, scripts), o stub do PHP-CS-Fixer, os marcadores do `.editorconfig`, o `.gitignore` e o `.gitattributes` |
 | `phpunit.test.cjs` | o `phpunit.xml` exato (bloco `<source>`, `cacheDirectory`, `failOnWarning`) |
 | `removidos.test.cjs` | os arquivos que não podem existir |
