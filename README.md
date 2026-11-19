@@ -9,7 +9,7 @@
 Extensão SQLite para o framework Elavora, baseada em `elavora/api-database-pdo`.
 
 - Versão: **1.0.0**. Dependentes devem exigir `"elavora/api-database-sqlite": "^1.0"`.
-- Exige `elavora/api-framework` `^4.1`, `elavora/api-database-pdo` `^3.0`, PHP `>=8.4` e `ext-pdo_sqlite`.
+- Exige `elavora/api-framework` `^4.1 || ^5.0 || ^6.0`, `elavora/api-database-pdo` `^3.0`, PHP `>=8.4` e `ext-pdo_sqlite`.
 
 Registre `SqliteExtension` com `path` para arquivo local ou `memory` como `true` para banco em memória.
 A chave `connections` habilita conexões nomeadas.
@@ -26,7 +26,7 @@ A especificação completa, com regras e exemplos, está em [docs/USO.md](docs/U
 composer require elavora/api-database-sqlite
 ```
 
-Requisitos: PHP 8.4 ou superior, `ext-pdo_sqlite`, `elavora/api-framework` `^4.1` e `elavora/api-database-pdo` `^3.0`.
+Requisitos: PHP 8.4 ou superior, `ext-pdo_sqlite`, `elavora/api-framework` `^4.1 || ^5.0 || ^6.0` e `elavora/api-database-pdo` `^3.0`.
 
 ## Desenvolvimento e testes
 
